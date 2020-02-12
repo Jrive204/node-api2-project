@@ -7,7 +7,8 @@ import {
   Form,
   FormGroup,
   Label,
-  Input
+  Input,
+  Badge
 } from "reactstrap";
 import Axios from "axios";
 
@@ -41,6 +42,28 @@ const Data = ({ ele, handleEdit, handleDelete, loading, setLoading }) => {
           console.log(res, "post") & setLoading(true) & setcomment({ text: "" })
       )
       .catch(err => console.log(err, "error"));
+  };
+
+  const commentdelete = (e, id) => {
+    e.preventDefault();
+    Axios.delete(`http://localhost:5000/api/posts/comments/${id}`)
+      .then(
+        res =>
+          console.log(res, "delete") &
+          setLoading(true) &
+          setcomment({ text: "" })
+      )
+      .catch(err => console.log(err));
+  };
+
+  const handlecommentEdit = (e, id) => {
+    e.preventDefault();
+    Axios.put(`http://localhost:5000/api/posts/comments/${id}`, comment)
+      .then(
+        res =>
+          console.log(res, "post") & setLoading(true) & setcomment({ text: "" })
+      )
+      .catch(err => console.log(err, "post"));
   };
 
   return (
@@ -88,7 +111,24 @@ const Data = ({ ele, handleEdit, handleDelete, loading, setLoading }) => {
             Comments :
             {state.map(data => (
               <p>
-                {data.text} {data.post_id}
+                {data.text}{" "}
+                <Badge
+                  onClick={e => handlecommentEdit(e, data.id)}
+                  color='warning'
+                  pill>
+                  Edit
+                </Badge>
+                <span
+                  style={{
+                    color: "red",
+                    fontWeight: "700",
+                    fontSize: "1rem",
+                    marginLeft: "1%"
+                  }}
+                  onClick={e => commentdelete(e, data.id)}>
+                  X
+                </span>
+                {/* {data.id} */}
               </p>
             ))}
           </CardText>

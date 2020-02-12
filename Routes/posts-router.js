@@ -50,6 +50,25 @@ router.get("/:id/comments", (req, res) => {
     );
 });
 
+router.get("/comments/:id", (req, res) => {
+  const { id } = req.params;
+
+  data
+    .findCommentById(id)
+    .then(posts =>
+      posts.length === 0
+        ? res.status(404).json({
+            message: "The post with the specified ID does not exist."
+          }) & console.log(posts)
+        : res.status(200).json(posts)
+    )
+    .catch(err =>
+      res
+        .status(500)
+        .json({ errorMessage: "The posts information could not be retrieved" })
+    );
+});
+
 // POSTS ----------
 
 router.post("/", (req, res) => {
@@ -138,6 +157,27 @@ router.delete("/:id", (req, res) => {
         .json({ errorMessage: "The posts information could not be retrieved" })
     );
 });
+
+// Delete personal Stretch
+
+router.delete("/comments/:id", (req, res) => {
+  const { id } = req.params;
+
+  data
+    .removeCommentById(id)
+    .then(posts =>
+      posts.length === 0
+        ? res.status(404).json({
+            message: "The post with the specified ID does not exist."
+          }) & console.log(posts)
+        : res.status(200).json(posts)
+    )
+    .catch(err =>
+      res
+        .status(500)
+        .json({ errorMessage: "The posts information could not be retrieved" })
+    );
+});
 // PUT ----------------------------------------
 
 router.put("/:id", (req, res) => {
@@ -156,6 +196,39 @@ router.put("/:id", (req, res) => {
             errorMessage: "Please provide title and contents for the post"
           })
         : Object.keys(req.body).length > 2
+        ? res.status(500).json({
+            errorMessage: "it Works"
+          })
+        : res.status(200).json(posts)
+    )
+    .catch(
+      err =>
+        res
+          .status(500)
+
+          .json({
+            errorMessage: "The post information could not be modified"
+          }) & console.log(Object.keys(req.body).length > 2, "reqbody")
+    );
+});
+
+// PERSONAL STRETCH PUT
+router.put("/comments/:id", (req, res) => {
+  const { id } = req.params;
+  const post = req.body;
+
+  data
+    .updateComment(id, post)
+    .then(posts =>
+      posts === 0
+        ? res.status(404).json({
+            message: "The post with the specified ID does not exist."
+          })
+        : !post.text
+        ? res.status(400).json({
+            errorMessage: "Please provide title and contents for the post"
+          })
+        : Object.keys(req.body).length > 1
         ? res.status(500).json({
             errorMessage: "it Works"
           })
