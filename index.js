@@ -9,6 +9,10 @@ server.use(express.json());
 
 server.use(cors());
 
+server.use("/", (req, res) => {
+  res.status(200).json({ Welcome: "DEPLOYED" });
+});
+
 server.use("/api/posts", postsRouter);
 
 const port = process.env.PORT || 5000;
