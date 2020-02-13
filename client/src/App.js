@@ -11,7 +11,7 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    Axios.get("http://localhost:5000/api/posts")
+    Axios.get("https://hobbitsls.herokuapp.com/api/posts")
       .then(
         res =>
           console.log(res, "GET") &
@@ -25,7 +25,7 @@ function App() {
 
   const handlesubmit = e => {
     e.preventDefault();
-    Axios.post("http://localhost:5000/api/posts", user)
+    Axios.post("https://hobbitsls.herokuapp.com/api/posts", user)
       .then(
         res =>
           console.log(res, "post") &
@@ -36,7 +36,7 @@ function App() {
   };
 
   const handleEdit = id => {
-    Axios.put(`http://localhost:5000/api/posts/${id}`, user)
+    Axios.put(`https://hobbitsls.herokuapp.com/api/posts/${id}`, user)
       .then(
         res =>
           console.log(res, "post") &
@@ -46,7 +46,7 @@ function App() {
       .catch(err => console.log(err, "post"));
   };
   const handleDelete = id => {
-    Axios.delete(`http://localhost:5000/api/posts/${id}`)
+    Axios.delete(`https://hobbitsls.herokuapp.com/api/posts/${id}`)
       .then(
         res =>
           console.log(res, "delete") &

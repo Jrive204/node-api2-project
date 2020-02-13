@@ -99,7 +99,7 @@ router.post("/:id/comments", (req, res) => {
   const comment = { ...req.body, post_id: id };
 
   data
-    .findCommentById(id)
+    .findById(id)
     .then(ids =>
       ids.length === 0
         ? res.status(404).json({

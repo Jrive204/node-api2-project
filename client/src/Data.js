@@ -17,7 +17,7 @@ const Data = ({ ele, handleEdit, handleDelete, loading, setLoading }) => {
   const [state, setstate] = useState([]);
 
   useEffect(() => {
-    Axios.get(`http://localhost:5000/api/posts/${ele.id}/comments`)
+    Axios.get(`https://hobbitsls.herokuapp.com/api/posts/${ele.id}/comments`)
       .then(
         res =>
           console.log(res, "GET") &
@@ -36,7 +36,10 @@ const Data = ({ ele, handleEdit, handleDelete, loading, setLoading }) => {
 
   const handlesubmit = e => {
     e.preventDefault();
-    Axios.post(`http://localhost:5000/api/posts/${ele.id}/comments`, comment)
+    Axios.post(
+      `https://hobbitsls.herokuapp.com/api/posts/${ele.id}/comments`,
+      comment
+    )
       .then(
         res =>
           console.log(res, "post") & setLoading(true) & setcomment({ text: "" })
@@ -46,7 +49,7 @@ const Data = ({ ele, handleEdit, handleDelete, loading, setLoading }) => {
 
   const commentdelete = (e, id) => {
     e.preventDefault();
-    Axios.delete(`http://localhost:5000/api/posts/comments/${id}`)
+    Axios.delete(`https://hobbitsls.herokuapp.com/api/posts/comments/${id}`)
       .then(
         res =>
           console.log(res, "delete") &
@@ -58,7 +61,10 @@ const Data = ({ ele, handleEdit, handleDelete, loading, setLoading }) => {
 
   const handlecommentEdit = (e, id) => {
     e.preventDefault();
-    Axios.put(`http://localhost:5000/api/posts/comments/${id}`, comment)
+    Axios.put(
+      `https://hobbitsls.herokuapp.com/api/posts/comments/${id}`,
+      comment
+    )
       .then(
         res =>
           console.log(res, "post") & setLoading(true) & setcomment({ text: "" })
